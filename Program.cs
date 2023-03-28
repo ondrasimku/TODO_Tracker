@@ -1,4 +1,5 @@
 ﻿using System;
+using TODO_Tracker.Utils.Menu;
 
 namespace TODO_Tracker
 {
@@ -6,7 +7,8 @@ namespace TODO_Tracker
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            MainMenu menu = new MainMenu();
+            menu.menuStart();
         }
     }
 }
