@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Globalization;
 using TODO_Tracker.Service;
 
@@ -10,7 +9,7 @@ namespace TODO_Tracker.Utils.Menu
 {
     class TaskCreationMenu : AbstractMenu
     {
-        private readonly TaskTrackerSerice todoListService = new TaskTrackerSerice();
+        private readonly TaskTrackerService taskTrackerService = new TaskTrackerService();
 
         private readonly string cultureCode = "cs-CZ";
         private readonly string dateFormat = "dd.MM.yyyy";
@@ -19,25 +18,13 @@ namespace TODO_Tracker.Utils.Menu
             string title = this.getTitleInput();
             string description = this.getDescriptionInput();
             DateTime? dueDate = this.getDueDateInput();
-            int? priority = this.getPriorityInput();
-
-            todoListService.addTask(title);
-
-            Console.WriteLine(title);
-            Console.WriteLine(description);
-            if (dueDate != null)
-                Console.WriteLine(dueDate.ToString());
-            else
-                Console.WriteLine("No date");
-
-            if (priority != null)
-                Console.WriteLine(priority);
-            else
-                Console.WriteLine("No priority");
+            byte? priority = this.getPriorityInput();
+            taskTrackerService.addTask(title, description, dueDate, priority, false);
+            ConsoleUtil.writeInfo("Task created.");
         }
 
         private string getTitleInput() {
-            this.clear();
+            ConsoleUtil.clear();
             bool gotTitle = false;
             String title = null;
             while (!gotTitle)
@@ -46,12 +33,12 @@ namespace TODO_Tracker.Utils.Menu
                 title = Console.ReadLine();
                 if (string.IsNullOrEmpty(title))
                 {
-                    this.writeError("Title must not be empty");
+                    ConsoleUtil.writeError("Title must not be empty");
                     continue;
                 }
                     
-                if (title.Length > 80)
-                    this.writeError("Title must not contain more than 80 characters.");
+                if (title.Length > 47)
+                    ConsoleUtil.writeError("Title must not contain more than 47 characters.");
                 else
                     gotTitle = true;
             }
@@ -60,7 +47,7 @@ namespace TODO_Tracker.Utils.Menu
 
         private string getDescriptionInput()
         {
-            this.clear();
+            ConsoleUtil.clear();
             bool gotTitle = false;
             string description = null;
             while (!gotTitle)
@@ -69,12 +56,12 @@ namespace TODO_Tracker.Utils.Menu
                 description = Console.ReadLine();
                 if (string.IsNullOrEmpty(description))
                 {
-                    this.writeError("Description must not be empty");
+                    ConsoleUtil.writeError("Description must not be empty");
                     continue;
                 }
 
-                if (description.Length > 80)
-                    this.writeError("Title mustn't contain more than 80 characters.");
+                if (description.Length > 50)
+                    ConsoleUtil.writeError("Title mustn't contain more than 80 characters.");
                 else
                     gotTitle = true;
             }
@@ -82,7 +69,7 @@ namespace TODO_Tracker.Utils.Menu
         }
 
         private DateTime? getDueDateInput() {
-            this.clear();
+            ConsoleUtil.clear();
             bool agree = this.agree("Do want the task to have a due date? (Y/N): ");
             if (!agree)
                 return null;
@@ -99,34 +86,34 @@ namespace TODO_Tracker.Utils.Menu
                 }
                 catch (FormatException exception)
                 {
-                    this.writeError("Wrong date format.\n"+exception.Message);
+                    ConsoleUtil.writeError("Wrong date format.\n"+exception.Message);
                 }
             }
             return dateTime;
         }
 
-        private int? getPriorityInput() {
-            this.clear();
+        private byte? getPriorityInput() {
+            ConsoleUtil.clear();
             bool agree = this.agree("Do want the task to have priority level? (Y/N): ");
             if (!agree)
                 return null;
 
             bool gotPriority = false;
-            int priority = 0;
+            byte priority = 0;
             while (!gotPriority)
             {
                 Console.Write("Enter task priority level (0-5): ");
-                bool validChoice = int.TryParse(Console.ReadLine(), out priority);
+                bool validChoice = byte.TryParse(Console.ReadLine(), out priority);
                 if (validChoice)
                 {
-                    if (priority < 0 || priority > 5)
-                        this.writeError("Enter a whole number between 0 and 5");
+                    if (priority > 5)
+                        ConsoleUtil.writeError("Enter a whole number between 0 and 5");
                     else
                         gotPriority = true;
                 }
                 else
                 {
-                    this.writeError("Enter a whole number between 0 and 5");
+                    ConsoleUtil.writeError("Enter a whole number between 0 and 5");
                 }
             }
             return priority;

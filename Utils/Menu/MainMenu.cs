@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using TODO_Tracker.Service;
 using TODO_Tracker.Utils.Menu;
 
@@ -11,8 +10,9 @@ namespace TODO_Tracker.Utils.Menu
 
     class MainMenu : AbstractMenu
     {
-        private readonly TaskTrackerSerice taskTrackerService = new TaskTrackerSerice();
+        private readonly TaskTrackerService taskTrackerService = new TaskTrackerService();
         private readonly TaskCreationMenu taskCreationMenu = new TaskCreationMenu();
+        private readonly RemoveTaskMenu removeTaskMenu = new RemoveTaskMenu();
 
         public override void menuStart() {
             int choice;
@@ -40,7 +40,7 @@ namespace TODO_Tracker.Utils.Menu
                             running = false;
                             break;
                         case 1:
-                            Console.WriteLine(this.taskTrackerService.getTask());
+                            this.taskTrackerService.printTaskList();
                             break;
                         case 2:
                             Console.WriteLine("You chose Option 2.");
@@ -55,7 +55,7 @@ namespace TODO_Tracker.Utils.Menu
                             Console.WriteLine("You chose Option 5.");
                             break;
                         case 6:
-                            Console.WriteLine("Exiting program.");
+                            this.removeTaskMenu.menuStart();
                             break;
                         case 7:
                             Console.WriteLine("Exiting program.");
@@ -64,13 +64,13 @@ namespace TODO_Tracker.Utils.Menu
                             Console.WriteLine("Exiting program.");
                             break;
                         default:
-                            this.writeError("Invaĺid choice");
+                            ConsoleUtil.writeError("Invaĺid choice");
                             break;
                     }
                 }
                 else
                 {
-                    this.writeError("You must enter a number.");
+                    ConsoleUtil.writeError("You must enter a number.");
                 }
             }
         }

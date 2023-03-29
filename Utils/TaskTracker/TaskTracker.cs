@@ -2,35 +2,43 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using TODO_Tracker.Entity;
 
 namespace TODO_Tracker.Utils.TodoTracker
 {
     sealed class TaskTracker
     {
         private TaskTracker() { }
-        private static TaskTracker todoTrackerInstance = null;
+        private static TaskTracker taskTrackerInstance = null;
 
-        private List<string> taskList = new List<string>();
-
+        private List<Task> taskList = new List<Task>();
         public static TaskTracker getInstance() {
-            if (TaskTracker.todoTrackerInstance == null)
-                TaskTracker.todoTrackerInstance = new TaskTracker();
-            return todoTrackerInstance;
+            if (TaskTracker.taskTrackerInstance == null)
+                TaskTracker.taskTrackerInstance = new TaskTracker();
+            return taskTrackerInstance;
         }
 
-        public List<string> getTaskList() {
+        public List<Task> getTaskList() {
             return this.taskList;
         }
 
-        public TaskTracker setTaskList(List<string> taskList) {
+        public TaskTracker setTaskList(List<Task> taskList) {
             this.taskList = taskList;
             return this;
         }
 
-        public TaskTracker addItem(string title) {
-            this.taskList.Add(title);
+        public TaskTracker addItem(Task task) {
+            Task last = this.taskList.LastOrDefault();
+            if (last == null)
+                task.setId(1);
+            else
+                task.setId(last.getId() + 1);
+            this.taskList.Add(task);
             return this;
+        }
+
+        public bool removeItem(Task task) {
+            return this.taskList.Remove(task);
         }
     }
 }
