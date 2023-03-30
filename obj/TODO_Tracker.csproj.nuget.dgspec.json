@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\.lecgo\\semestralka\\TODO_Tracker.csproj": {}
+    "C:\\.lecgo\\semestralka\\TODO_Tracker.csproj": {}
   },
   "projects": {
-    "c:\\.lecgo\\semestralka\\TODO_Tracker.csproj": {
+    "C:\\.lecgo\\semestralka\\TODO_Tracker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\.lecgo\\semestralka\\TODO_Tracker.csproj",
+        "projectUniqueName": "C:\\.lecgo\\semestralka\\TODO_Tracker.csproj",
         "projectName": "TODO_Tracker",
-        "projectPath": "c:\\.lecgo\\semestralka\\TODO_Tracker.csproj",
+        "projectPath": "C:\\.lecgo\\semestralka\\TODO_Tracker.csproj",
         "packagesPath": "C:\\Users\\Lacoste\\.nuget\\packages\\",
-        "outputPath": "c:\\.lecgo\\semestralka\\obj\\",
+        "outputPath": "C:\\.lecgo\\semestralka\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

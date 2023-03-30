@@ -6,11 +6,18 @@ using TODO_Tracker.Service;
 
 namespace TODO_Tracker.Utils.Menu
 {
-    class RemoveTaskMenu : AbstractMenu
+    class TaskRemoveMenu : AbstractMenu
     {
         private readonly TaskTrackerService taskTrackerService = new TaskTrackerService();
         public override void menuStart()
         {
+            int? taskId = this.getTaskIdInput();
+            if (taskId == null)
+                return;
+            this.taskTrackerService.removeTask((int)taskId);
+        }
+
+        public int? getTaskIdInput() {
             bool gotId = false;
             byte taskId = 0;
             while (!gotId)
@@ -18,14 +25,14 @@ namespace TODO_Tracker.Utils.Menu
                 Console.Write("Enter task ID you wish to remove: ");
                 bool validChoice = byte.TryParse(Console.ReadLine(), out taskId);
                 if (validChoice)
-                        gotId = true;
+                    gotId = true;
                 else
                     ConsoleUtil.writeError("Enter a whole number.");
             }
             bool agree = this.agree("Do you really want to remove task with ID of " + taskId + " (Y/N):");
             if (!agree)
-                return;
-            this.taskTrackerService.removeTask(taskId);
+                return null;
+            return taskId;
         }
     }
 }

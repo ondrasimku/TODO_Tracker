@@ -8,8 +8,8 @@ namespace TODO_Tracker.Factory
 {
     class TaskFactory
     {
-        public static Task createTask(string title, string description, DateTime? dateTime, byte? priority, bool isDone) {
-            Task task = new Task(title, description, dateTime, priority, isDone);
+        public static Task createTask(string title, string description, DateTime? dateTime, ushort? priority, ushort? timeComplexity, bool isDone) {
+            Task task = new Task(title, description, dateTime, priority, timeComplexity, isDone);
             return task;
         }
     }

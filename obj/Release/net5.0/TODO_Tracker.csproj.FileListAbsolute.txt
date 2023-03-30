@@ -1,0 +1,15 @@
+c:\.lecgo\semestralka\bin\Release\net5.0\TODO_Tracker.exe
+c:\.lecgo\semestralka\bin\Release\net5.0\TODO_Tracker.deps.json
+c:\.lecgo\semestralka\bin\Release\net5.0\TODO_Tracker.runtimeconfig.json
+c:\.lecgo\semestralka\bin\Release\net5.0\TODO_Tracker.runtimeconfig.dev.json
+c:\.lecgo\semestralka\bin\Release\net5.0\TODO_Tracker.dll
+c:\.lecgo\semestralka\bin\Release\net5.0\ref\TODO_Tracker.dll
+c:\.lecgo\semestralka\bin\Release\net5.0\TODO_Tracker.pdb
+c:\.lecgo\semestralka\obj\Release\net5.0\TODO_Tracker.GeneratedMSBuildEditorConfig.editorconfig
+c:\.lecgo\semestralka\obj\Release\net5.0\TODO_Tracker.AssemblyInfoInputs.cache
+c:\.lecgo\semestralka\obj\Release\net5.0\TODO_Tracker.AssemblyInfo.cs
+c:\.lecgo\semestralka\obj\Release\net5.0\TODO_Tracker.csproj.CoreCompileInputs.cache
+c:\.lecgo\semestralka\obj\Release\net5.0\TODO_Tracker.dll
+c:\.lecgo\semestralka\obj\Release\net5.0\ref\TODO_Tracker.dll
+c:\.lecgo\semestralka\obj\Release\net5.0\TODO_Tracker.pdb
+c:\.lecgo\semestralka\obj\Release\net5.0\TODO_Tracker.genruntimeconfig.cache

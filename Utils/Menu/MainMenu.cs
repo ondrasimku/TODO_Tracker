@@ -11,60 +11,61 @@ namespace TODO_Tracker.Utils.Menu
     class MainMenu : AbstractMenu
     {
         private readonly TaskTrackerService taskTrackerService = new TaskTrackerService();
+        private readonly ExportService exportService = new ExportService();
         private readonly TaskCreationMenu taskCreationMenu = new TaskCreationMenu();
-        private readonly RemoveTaskMenu removeTaskMenu = new RemoveTaskMenu();
+        private readonly TaskRemoveMenu taskRemoveMenu = new TaskRemoveMenu();
+        private readonly TaskDetailMenu taskDetailMenu = new TaskDetailMenu();
+        private readonly TaskSortMenu taskSortMenu = new TaskSortMenu();
+        private readonly TasksImportMenu tasksImportMenu = new TasksImportMenu();
 
         public override void menuStart() {
-            int choice;
+            ushort choice;
             bool running = true;
             while (running) {
                 Console.WriteLine("Choose an option:");
-                Console.WriteLine("1. List tasks");
-                Console.WriteLine("2. Filter tasks");
-                Console.WriteLine("3. Add task");
-                Console.WriteLine("4. Task detail");
-                Console.WriteLine("5. Bulk action");
-                Console.WriteLine("6. Remove item");
-                Console.WriteLine("7. Export to file");
-                Console.WriteLine("8. Import from file");
-                Console.WriteLine("0. Exit");
+                Console.WriteLine("1. List tasks"); // Done
+                Console.WriteLine("2. Sort tasks"); // Done
+                Console.WriteLine("3. Add task"); // Done
+                Console.WriteLine("4. Task detail"); // Done
+                Console.WriteLine("5. Remove task"); // Done
+                Console.WriteLine("6. Export to file"); // Done
+                Console.WriteLine("7. Import from file");
+                Console.WriteLine("0. Exit"); // Done
 
-                Console.Write("\nYour choice (0-8): ");
-                bool validChoice = int.TryParse(Console.ReadLine(), out choice);
+                Console.Write("\nYour choice (0-7): ");
+                bool validChoice = ushort.TryParse(Console.ReadLine(), out choice);
                 if (validChoice)
                 {
                     switch (choice)
                     {
                         case 0:
-                            Console.WriteLine("Exiting");
+                            ConsoleUtil.writeInfo("Exiting");
+                            this.exportService.export("json", true);
                             running = false;
                             break;
                         case 1:
                             this.taskTrackerService.printTaskList();
                             break;
                         case 2:
-                            Console.WriteLine("You chose Option 2.");
+                            this.taskSortMenu.menuStart();
                             break;
                         case 3:
                             this.taskCreationMenu.menuStart();
                             break;
                         case 4:
-                            Console.WriteLine("You chose Option 4.");
+                            this.taskDetailMenu.menuStart();
                             break;
                         case 5:
-                            Console.WriteLine("You chose Option 5.");
+                            this.taskRemoveMenu.menuStart();
                             break;
                         case 6:
-                            this.removeTaskMenu.menuStart();
+                            this.exportService.export();
                             break;
                         case 7:
-                            Console.WriteLine("Exiting program.");
-                            break;
-                        case 8:
-                            Console.WriteLine("Exiting program.");
+                            this.tasksImportMenu.menuStart();
                             break;
                         default:
-                            ConsoleUtil.writeError("Invaĺid choice");
+                            ConsoleUtil.writeError("Invalid choice");
                             break;
                     }
                 }

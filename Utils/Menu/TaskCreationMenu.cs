@@ -18,8 +18,9 @@ namespace TODO_Tracker.Utils.Menu
             string title = this.getTitleInput();
             string description = this.getDescriptionInput();
             DateTime? dueDate = this.getDueDateInput();
-            byte? priority = this.getPriorityInput();
-            taskTrackerService.addTask(title, description, dueDate, priority, false);
+            ushort? priority = this.getPriorityInput();
+            ushort? timeComplexity = this.getTimeComplexityInput();
+            taskTrackerService.addTask(title, description, dueDate, priority, timeComplexity, false);
             ConsoleUtil.writeInfo("Task created.");
         }
 
@@ -78,7 +79,7 @@ namespace TODO_Tracker.Utils.Menu
             DateTime? dateTime = null;
             bool gotDueDate = false;
             while (!gotDueDate) {
-                Console.Write("Enter date in format \"day.month.year\"(ex. 03.12.2001): ");
+                Console.Write("Enter date in format \""+ this.dateFormat +"\"(ex. "+ DateTime.Now.Date.ToString(this.dateFormat)+"): ");
                 try
                 {
                     dateTime = DateTime.ParseExact(Console.ReadLine(), this.dateFormat, cultureInfo);
@@ -92,18 +93,18 @@ namespace TODO_Tracker.Utils.Menu
             return dateTime;
         }
 
-        private byte? getPriorityInput() {
+        private ushort? getPriorityInput() {
             ConsoleUtil.clear();
             bool agree = this.agree("Do want the task to have priority level? (Y/N): ");
             if (!agree)
                 return null;
 
             bool gotPriority = false;
-            byte priority = 0;
+            ushort priority = 0;
             while (!gotPriority)
             {
                 Console.Write("Enter task priority level (0-5): ");
-                bool validChoice = byte.TryParse(Console.ReadLine(), out priority);
+                bool validChoice = ushort.TryParse(Console.ReadLine(), out priority);
                 if (validChoice)
                 {
                     if (priority > 5)
@@ -117,6 +118,34 @@ namespace TODO_Tracker.Utils.Menu
                 }
             }
             return priority;
+        }
+
+        private ushort? getTimeComplexityInput()
+        {
+            ConsoleUtil.clear();
+            bool agree = this.agree("Do want the task to have time complexity? (Y/N): ");
+            if (!agree)
+                return null;
+
+            bool gotComplexity = false;
+            ushort complexity = 0;
+            while (!gotComplexity)
+            {
+                Console.Write("Enter task time complexity (0-10): ");
+                bool validChoice = ushort.TryParse(Console.ReadLine(), out complexity);
+                if (validChoice)
+                {
+                    if (complexity > 10)
+                        ConsoleUtil.writeError("Enter a whole number between 0 and 10");
+                    else
+                        gotComplexity = true;
+                }
+                else
+                {
+                    ConsoleUtil.writeError("Enter a whole number between 0 and 10");
+                }
+            }
+            return complexity;
         }
     }
 }
