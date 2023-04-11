@@ -19,6 +19,7 @@ namespace TODO_Tracker.Utils.Menu
         private readonly TasksImportMenu tasksImportMenu = new TasksImportMenu();
 
         public override void menuStart() {
+            this.exportService.checkRuntimeSave();
             ushort choice;
             bool running = true;
             while (running) {

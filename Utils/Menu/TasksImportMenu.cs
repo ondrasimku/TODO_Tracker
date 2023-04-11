@@ -15,10 +15,13 @@ namespace TODO_Tracker.Utils.Menu
         public override void menuStart()
         {
             string path = this.getPathInput();
+            if (path == null)
+                return;
             this.exportService.import(path);
         }
 
-        private string getPathInput() {
+        private string? getPathInput() {
+            ConsoleUtil.clear();
             string path = null;
             bool gotPath = false;
             while (!gotPath) {
@@ -31,7 +34,7 @@ namespace TODO_Tracker.Utils.Menu
                 }
                 if (!this.exportService.fileExists(path)) {
                     ConsoleUtil.writeError("File \"" + path + "\" not found.");
-                    continue;
+                    return null;
                 }
                 gotPath = true;
             }

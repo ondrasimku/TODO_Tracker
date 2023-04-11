@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using TODO_Tracker.Entity;
+using System.Reflection;
 using System.IO;
 using TODO_Tracker.Utils.TaskTracker;
 using TODO_Tracker.Utils;
@@ -44,7 +45,7 @@ namespace TODO_Tracker.Service
             }
         }
 
-        public void import(string path, string format = "json", bool append = false) {
+        public void import(string path, string format = "json", bool runtimeSaving = false) {
             if (!this.formatCheck(format))
             {
                 ConsoleUtil.writeError("Invalid format");
@@ -53,24 +54,21 @@ namespace TODO_Tracker.Service
 
             if (format == "json") {
                 ExportData importData = this.jsonExporter.import(path);
-                if (!append)
+                this.taskTracker.setTaskList(importData.list);
+                if (!this.checkHash(importData))
                 {
-                    this.taskTracker.setTaskList(importData.list);
-                    if (!this.checkHash(importData))
-                    {
-                        ConsoleUtil.writeError("Import file is corrupted. Wrong check sum\nImportData checksum: " + importData.checksum + "\nExporttData checksum: " + exportData.checksum);
-                        return;
-                    }
+                    ConsoleUtil.writeError("Import was successful but checksums don't match.");
+                    return;
                 }
-                else
-                {
-                    List<Task> currentList = this.taskTracker.getTaskList();
-                    currentList.AddRange(importData.list);
-                    this.taskTracker.setTaskList(currentList);
-                }
-                   
+                ConsoleUtil.writeInfo("Import was successful.");
             }
-            string jsonString = File.ReadAllText(path);
+        }
+
+        public void checkRuntimeSave() {
+            string path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\export\\runtime-save.json";
+            if (!this.fileExists(path))
+                return;
+            this.import(path);
         }
 
         private bool checkHash(ExportData importData) {

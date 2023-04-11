@@ -48,7 +48,6 @@ namespace TODO_Tracker.Utils.Exporter
                 WriteIndented = true,
             };
             ExportData importData = JsonSerializer.Deserialize<ExportData>(jsonData, options);
-            Console.WriteLine("imported tasks SHA512: " + importData.checksum);
             return importData;
         }
     }
